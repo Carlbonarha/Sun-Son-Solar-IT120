@@ -1,0 +1,606 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Meta tags for responsive design -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - Sun Son Solar</title>
+    
+    <!-- Link to shared CSS file -->
+    <link rel="stylesheet" href="styles.css">
+    
+    <style>
+        /* Dashboard specific styles */
+        
+        /* Main content area */
+        .main-content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* User profile section at top */
+        .user-profile {
+            background: linear-gradient(135deg, #1a73e8 0%, #1557b0 100%);
+            color: white;
+            padding: 24px;
+            margin: 20px;
+            border-radius: 8px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .user-profile-info h3 {
+            font-size: 20px;
+            margin-bottom: 6px;
+        }
+
+        .user-profile-info p {
+            font-size: 14px;
+            opacity: 0.9;
+        }
+
+        .user-profile-badge {
+            background: #ffd400;
+            color: #1a73e8;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-weight: bold;
+            font-size: 14px;
+        }
+
+        /* Tab navigation container */
+        .tab-navigation {
+            display: flex;
+            background: white;
+            border-bottom: 2px solid #e0e0e0;
+            margin: 0 20px;
+            border-radius: 8px 8px 0 0;
+            overflow: hidden;
+        }
+
+        .tab-navigation button {
+            flex: 1;
+            padding: 16px;
+            background: #f5f5f5;
+            border: none;
+            cursor: pointer;
+            font-size: 15px;
+            font-weight: 500;
+            color: #666;
+            transition: all 0.3s ease;
+            border-bottom: 3px solid transparent;
+        }
+
+        .tab-navigation button:hover {
+            background: #e8e8e8;
+        }
+
+        .tab-navigation button.active {
+            background: white;
+            color: #1a73e8;
+            border-bottom-color: #1a73e8;
+        }
+
+        /* Tab content area */
+        .tabs-container {
+            flex: 1;
+            background: white;
+            margin: 0 20px 20px;
+            border-radius: 0 0 8px 8px;
+            padding: 30px;
+            overflow-y: auto;
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+            animation: fadeIn 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Welcome message */
+        .welcome-message {
+            background: #f0f7ff;
+            border-left: 4px solid #1a73e8;
+            padding: 20px;
+            border-radius: 6px;
+            margin-bottom: 20px;
+        }
+
+        .welcome-message h3 {
+            color: #1a73e8;
+            margin-bottom: 8px;
+        }
+
+        .welcome-message p {
+            color: #555;
+            line-height: 1.6;
+        }
+
+        /* Quick stats */
+        .quick-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 16px;
+            margin-bottom: 30px;
+        }
+
+        .stat-card {
+            background: white;
+            border: 1px solid #e0e0e0;
+            padding: 20px;
+            border-radius: 8px;
+            text-align: center;
+            border-top: 3px solid #ffd400;
+        }
+
+        .stat-card .number {
+            font-size: 28px;
+            font-weight: bold;
+            color: #1a73e8;
+            margin-bottom: 8px;
+        }
+
+        .stat-card .label {
+            color: #666;
+            font-size: 14px;
+        }
+
+        /* Responsive layout */
+        @media (max-width: 768px) {
+            .user-profile {
+                flex-direction: column;
+                text-align: center;
+                gap: 16px;
+            }
+
+            .tab-navigation {
+                flex-wrap: wrap;
+            }
+
+            .tab-navigation button {
+                flex: 0 0 50%;
+            }
+
+            .tabs-container {
+                padding: 20px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .tab-navigation button {
+                flex: 0 0 100%;
+                font-size: 13px;
+                padding: 12px;
+            }
+
+            .tabs-container {
+                padding: 15px;
+            }
+
+            .quick-stats {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header with Sun Son Solar branding -->
+    <header>
+        <div class="header-logo">🌞 Sun Son Solar</div>
+        <nav class="header-nav">
+            <span id="headerUsername"></span>
+            <a id="scheduleLink" class="hidden" href="schedule.html">Schedule</a>
+            <a id="employeeTimeInLink" class="hidden" href="employee-timein.html">Time In</a>
+            <a id="roleDashboardLink" class="hidden"></a>
+            <a href="profile.html">My Profile</a>
+            <button class="logout-btn" onclick="logout()">Logout</button>
+        </nav>
+    </header>
+
+    <!-- Main content area -->
+    <div class="main-content">
+        <!-- User profile summary -->
+        <div class="user-profile">
+            <div class="user-profile-info">
+                <h3>Welcome, <span id="profileName"></span>!</h3>
+                <p>Email: <span id="profileEmail"></span></p>
+            </div>
+            <div class="user-profile-badge" id="profileRole"></div>
+        </div>
+
+        <!-- Tab navigation -->
+        <div class="tab-navigation">
+            <button class="active" onclick="switchTab('overview', this)">Overview</button>
+            <button onclick="switchTab('products', this)">Products</button>
+            <button onclick="switchTab('services', this)">Services</button>
+            <button id="checkinTab" class="hidden" onclick="switchTab('checkin', this)">Check-In</button>
+            <button id="adminTab" class="hidden" onclick="switchTab('admin', this)">Admin</button>
+        </div>
+
+        <!-- Tab content area -->
+        <div class="tabs-container">
+            
+            <!-- Overview Tab -->
+            <div id="overview" class="tab-content active">
+                <div class="welcome-message">
+                    <h3>Welcome to Sun Son Solar!</h3>
+                    <p>
+                        We provide high-quality solar energy products and comprehensive services 
+                        to help you transition to renewable energy. Browse our products and services 
+                        to learn more about what we offer.
+                    </p>
+                </div>
+
+                <!-- Quick stats for admin -->
+                <div class="quick-stats" id="statsContainer" style="display: none;">
+                    <div class="stat-card">
+                        <div class="number" id="totalUsers">0</div>
+                        <div class="label">Total Users</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="number" id="totalProducts">0</div>
+                        <div class="label">Products</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="number" id="totalServices">0</div>
+                        <div class="label">Services</div>
+                    </div>
+                </div>
+
+                <!-- User account information -->
+                <div class="user-info">
+                    <h4>Your Account Information:</h4>
+                    <p><strong>Username:</strong> <span id="detailUsername"></span></p>
+                    <p><strong>Email:</strong> <span id="detailEmail"></span></p>
+                    <p><strong>Role:</strong> <span id="detailRole"></span></p>
+                    <p><strong>Member Since:</strong> <span id="memberSince"></span></p>
+                </div>
+            </div>
+
+            <!-- Products Tab -->
+            <div id="products" class="tab-content">
+                <h3>Our Products</h3>
+                <p style="color: #666; margin-bottom: 20px;">
+                    Explore our range of high-quality solar products designed to meet all your renewable energy needs.
+                </p>
+                <div class="grid" id="productsContainer">
+                    <!-- Products will be loaded here by JavaScript -->
+                </div>
+            </div>
+
+            <!-- Services Tab -->
+            <div id="services" class="tab-content">
+                <h3>Our Services</h3>
+                <p style="color: #666; margin-bottom: 20px;">
+                    From consultation to installation and maintenance, we offer comprehensive solar services.
+                </p>
+                <div id="servicesContainer" style="margin-top: 20px;">
+                    <!-- Services will be loaded here by JavaScript -->
+                </div>
+            </div>
+
+            <!-- Check-In Tab (for technicians) -->
+            <div id="checkin" class="tab-content">
+                <h3>Time Check-In</h3>
+                <p style="color: #666; margin-bottom: 20px;">
+                    Record your work location and check-in time. Your location will be saved along with the timestamp.
+                </p>
+                
+                <div class="card">
+                    <!-- Location display -->
+                    <div id="locationStatus" style="display: none;">
+                        <h4>📍 Current Location:</h4>
+                        <p><strong>Latitude:</strong> <span id="displayLatitude">-</span></p>
+                        <p><strong>Longitude:</strong> <span id="displayLongitude">-</span></p>
+                        <p><strong>Accuracy:</strong> <span id="displayAccuracy">-</span> meters</p>
+                    </div>
+
+                    <!-- Alert messages -->
+                    <div id="checkinAlert" class="alert" style="margin-top: 16px;"></div>
+
+                    <!-- Buttons -->
+                    <div style="display: flex; gap: 10px; margin-top: 20px;">
+                        <button class="btn btn-primary" onclick="getLocationForCheckin()" style="flex: 1;">
+                            📍 Get My Location
+                        </button>
+                        <button class="btn btn-success" onclick="submitCheckinData()" style="flex: 1;">
+                            ✓ Check In Now
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Recent check-ins -->
+                <div id="recentCheckinsContainer" style="margin-top: 30px; display: none;">
+                    <h4>Your Recent Check-Ins:</h4>
+                    <div id="recentCheckins"></div>
+                </div>
+            </div>
+
+            <!-- Admin Tab (for admins only) -->
+            <div id="admin" class="tab-content">
+                <h3>Admin Dashboard</h3>
+                <p style="color: #666; margin-bottom: 20px;">
+                    Manage users, view statistics, and monitor system activity.
+                </p>
+
+                <!-- Users management section -->
+                <div class="card" style="margin-bottom: 20px;">
+                    <h4>Manage Users</h4>
+                    <p style="color: #666; font-size: 14px; margin-bottom: 16px;">
+                        View all registered users in the system.
+                    </p>
+                    <button class="btn btn-primary" onclick="loadAllUsers()">Show All Users</button>
+                    <div id="usersTableContainer" style="margin-top: 16px;"></div>
+                </div>
+
+                <!-- Check-in logs section -->
+                <div class="card">
+                    <h4>Check-In Logs</h4>
+                    <p style="color: #666; font-size: 14px; margin-bottom: 16px;">
+                        View all technician check-in records.
+                    </p>
+                    <button class="btn btn-primary" onclick="loadCheckinLogs()">Show Check-In Logs</button>
+                    <div id="checkinLogsContainer" style="margin-top: 16px;"></div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- Link to shared script file -->
+    <script src="script.js?v=4"></script>
+
+    <!-- Dashboard page specific script -->
+    <script>
+        // Load user data on page load
+        window.addEventListener('load', function() {
+            // Check if user is logged in
+            if (!isLoggedIn()) {
+                window.location.href = 'login.html';
+                return;
+            }
+
+            // Load user data
+            loadUserData();
+            
+            // Show admin tabs if user is admin
+            if (isAdmin()) {
+                document.getElementById('adminTab').classList.remove('hidden');
+                loadAdminStats();
+            }
+
+            // Show check-in tab if user is technician
+            if (isTechnician()) {
+                document.getElementById('checkinTab').classList.remove('hidden');
+                loadRecentCheckins();
+            }
+
+            // Load products and services
+            loadProductsData();
+            loadServicesData();
+        });
+
+        // Load and display user information
+        function loadUserData() {
+            const user = getCurrentUser();
+            const today = new Date();
+            const formattedDate = today.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+
+            // Update header
+            document.getElementById('headerUsername').textContent = `@${user.username}`;
+
+            if (user.role === 'Customer') {
+                document.getElementById('scheduleLink').classList.remove('hidden');
+            }
+            if (user.role !== 'Customer') {
+                document.getElementById('employeeTimeInLink').classList.remove('hidden');
+            }
+            if (user.role === 'Admin' || user.role === 'Dispatcher') {
+                const roleDashboardLink = document.getElementById('roleDashboardLink');
+                roleDashboardLink.href = getRoleHome(user.role);
+                roleDashboardLink.textContent = `${user.role} Dashboard`;
+                roleDashboardLink.classList.remove('hidden');
+            }
+
+            // Update profile section
+            document.getElementById('profileName').textContent = user.username;
+            const account = getAccountRecord(user.id);
+            const email = account ? account.record.email : user.email;
+            document.getElementById('profileEmail').textContent = email || 'Not provided';
+            document.getElementById('profileRole').textContent = user.role;
+
+            // Update detail section
+            document.getElementById('detailUsername').textContent = user.username;
+            document.getElementById('detailEmail').textContent = email || 'Not provided';
+            document.getElementById('detailRole').textContent = user.role;
+            document.getElementById('memberSince').textContent = formattedDate;
+        }
+
+        // Load and display products
+        function loadProductsData() {
+            const products = getProducts();
+            const container = document.getElementById('productsContainer');
+            container.innerHTML = '';
+
+            products.forEach(product => {
+                const card = document.createElement('div');
+                card.className = 'card';
+                card.innerHTML = `
+                    ${product.photo ? `<img src="${product.photo}" alt="${product.name}" style="width: 100%; height: 150px; object-fit: cover; border-radius: 6px; margin-bottom: 12px;">` : ''}
+                    <h3>${product.name}</h3>
+                    <p><strong>Category:</strong> ${product.category}</p>
+                    <p>${product.description}</p>
+                    <p style="color: #28a745; font-weight: bold; margin-top: 10px; font-size: 16px;">${product.price}</p>
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        // Load and display services
+        function loadServicesData() {
+            const services = getServices();
+            const container = document.getElementById('servicesContainer');
+            container.innerHTML = '';
+
+            services.forEach(service => {
+                const card = document.createElement('div');
+                card.className = 'card';
+                card.innerHTML = `
+                    ${service.photo ? `<img src="${service.photo}" alt="${service.name}" style="width: 100%; height: 150px; object-fit: cover; border-radius: 6px; margin-bottom: 12px;">` : ''}
+                    <h3>${service.name}</h3>
+                    <p><strong>Type:</strong> ${service.type}</p>
+                    <p>${service.description}</p>
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        // Get user's current location for check-in
+        function getLocationForCheckin() {
+            const alertElement = document.getElementById('checkinAlert');
+            
+            getCurrentLocation()
+                .then(location => {
+                    document.getElementById('displayLatitude').textContent = location.latitude.toFixed(6);
+                    document.getElementById('displayLongitude').textContent = location.longitude.toFixed(6);
+                    document.getElementById('displayAccuracy').textContent = 'GPS Enabled';
+                    document.getElementById('locationStatus').style.display = 'block';
+                    showAlert('checkinAlert', 'Location obtained successfully!', 'success');
+                })
+                .catch(error => {
+                    showAlert('checkinAlert', 'Error getting location: ' + error, 'error');
+                });
+        }
+
+        // Submit check-in data
+        function submitCheckinData() {
+            const latitude = document.getElementById('displayLatitude').textContent;
+            const longitude = document.getElementById('displayLongitude').textContent;
+            const alertElement = document.getElementById('checkinAlert');
+
+            if (latitude === '-' || longitude === '-') {
+                showAlert('checkinAlert', 'Please get your location first', 'error');
+                return;
+            }
+
+            const result = submitCheckin(latitude, longitude, 'GPS Location');
+            
+            if (result.success) {
+                showAlert('checkinAlert', 'Check-in successful!', 'success');
+                loadRecentCheckins();
+                setTimeout(() => {
+                    document.getElementById('displayLatitude').textContent = '-';
+                    document.getElementById('displayLongitude').textContent = '-';
+                    document.getElementById('locationStatus').style.display = 'none';
+                }, 2000);
+            }
+        }
+
+        // Load recent check-ins for current technician
+        function loadRecentCheckins() {
+            const allCheckins = getCheckins();
+            const user = getCurrentUser();
+            const userCheckins = allCheckins.filter(c => c.userId === user.id);
+
+            if (userCheckins.length === 0) {
+                return;
+            }
+
+            document.getElementById('recentCheckinsContainer').style.display = 'block';
+            const container = document.getElementById('recentCheckins');
+            container.innerHTML = '';
+
+            userCheckins.slice(-5).reverse().forEach(checkin => {
+                const div = document.createElement('div');
+                div.className = 'card';
+                div.innerHTML = `
+                    <p><strong>Time:</strong> ${checkin.timestamp}</p>
+                    <p><strong>Location:</strong> ${checkin.latitude.toFixed(4)}, ${checkin.longitude.toFixed(4)}</p>
+                    <p><strong>Address:</strong> ${checkin.address}</p>
+                `;
+                container.appendChild(div);
+            });
+        }
+
+        // Load admin statistics
+        function loadAdminStats() {
+            document.getElementById('statsContainer').style.display = 'grid';
+            document.getElementById('totalUsers').textContent = getAllUsers().length;
+            document.getElementById('totalProducts').textContent = getProducts().length;
+            document.getElementById('totalServices').textContent = getServices().length;
+        }
+
+        // Load all users for admin
+        function loadAllUsers() {
+            const users = getAllUsers();
+            const customers = getCustomers();
+            const employees = getEmployees();
+            const container = document.getElementById('usersTableContainer');
+
+            let html = '<table><thead><tr><th>Username</th><th>Role</th><th>Type</th></tr></thead><tbody>';
+            
+            users.forEach(user => {
+                const isEmployee = employees.find(e => e.userId === user.id);
+                const type = isEmployee ? 'Employee (' + isEmployee.department + ')' : 'Customer';
+                html += `<tr><td>${user.username}</td><td>${user.role}</td><td>${type}</td></tr>`;
+            });
+
+            html += '</tbody></table>';
+            container.innerHTML = html;
+        }
+
+        // Load check-in logs for admin
+        function loadCheckinLogs() {
+            const checkins = getCheckins();
+            const container = document.getElementById('checkinLogsContainer');
+
+            if (checkins.length === 0) {
+                container.innerHTML = '<p style="color: #666;">No check-in records yet.</p>';
+                return;
+            }
+
+            let html = '<table><thead><tr><th>User</th><th>Date & Time</th><th>Location</th></tr></thead><tbody>';
+            
+            checkins.slice().reverse().forEach(checkin => {
+                html += `<tr><td>${checkin.userName}</td><td>${checkin.timestamp}</td><td>${checkin.latitude.toFixed(4)}, ${checkin.longitude.toFixed(4)}</td></tr>`;
+            });
+
+            html += '</tbody></table>';
+            container.innerHTML = html;
+        }
+
+        // Switch between tabs
+        function switchTab(tabName, button) {
+            // Hide all tabs
+            document.querySelectorAll('.tab-content').forEach(tab => {
+                tab.classList.remove('active');
+            });
+
+            // Remove active class from all buttons
+            document.querySelectorAll('.tab-navigation button').forEach(btn => {
+                btn.classList.remove('active');
+            });
+
+            // Show selected tab and mark button as active
+            document.getElementById(tabName).classList.add('active');
+            button.classList.add('active');
+        }
+    </script>
+</body>
+</html>

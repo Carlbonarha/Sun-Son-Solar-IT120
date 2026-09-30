@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - Sun Son Solar</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        body { background: #f4f6f8; }
+        .admin-layout { display: flex; min-height: calc(100vh - 68px); }
+        .admin-side { width: 220px; background: #123b6d; padding: 24px 14px; }
+        .admin-side h2 { color: white; font-size: 18px; padding: 0 12px 20px; }
+        .admin-side button { width: 100%; border: 0; background: transparent; color: #dbe9f7; text-align: left; padding: 12px; border-radius: 6px; cursor: pointer; font: inherit; }
+        .admin-side button:hover, .admin-side button.active { background: #1a73e8; color: white; }
+        .admin-main { flex: 1; padding: 26px; min-width: 0; }
+        .admin-view { display: none; }
+        .admin-view.active { display: block; }
+        .admin-view h1 { color: #123b6d; margin-bottom: 8px; }
+        .admin-view > p { color: #666; margin-bottom: 20px; }
+        .admin-grid { display: grid; grid-template-columns: minmax(260px, 350px) 1fr; gap: 20px; align-items: start; }
+        .admin-card { background: white; padding: 22px; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,.08); }
+        .admin-card h2 { color: #1a73e8; font-size: 19px; margin-bottom: 16px; }
+        .record-list { display: grid; gap: 10px; }
+        .record { background: white; border: 1px solid #e0e0e0; border-left: 4px solid #ffd400; border-radius: 6px; padding: 14px; }
+        .record h3 { color: #1a73e8; font-size: 16px; margin-bottom: 6px; }
+        .record p { color: #666; font-size: 14px; margin: 4px 0; }
+        .record-actions { display: flex; gap: 8px; margin-top: 10px; }
+        .record-actions button { flex: 1; }
+        .small-btn { padding: 8px; border: 0; border-radius: 5px; cursor: pointer; font-weight: bold; }
+        .edit-btn { background: #e3f0ff; color: #1557b0; }
+        .delete-btn { background: #f8d7da; color: #721c24; }
+        .attendance-table { width: 100%; overflow-x: auto; }
+        .attendance-table table { min-width: 650px; }
+        .empty-state { color: #666; padding: 20px 0; }
+        @media (max-width: 800px) { .admin-layout { display: block; } .admin-side { width: 100%; display: flex; overflow-x: auto; gap: 6px; padding: 10px; } .admin-side h2 { display: none; } .admin-side button { width: auto; white-space: nowrap; } .admin-main { padding: 18px 12px; } .admin-grid { grid-template-columns: 1fr; } }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="header-logo">🌞 Sun Son Solar</div>
+        <nav class="header-nav" aria-label="Admin navigation">
+            <span id="adminUsername"></span>
+            <a href="dashboard.html">Dashboard</a>
+            <button class="logout-btn" type="button" onclick="logout()">Logout</button>
+        </nav>
+    </header>
+
+    <main class="admin-layout">
+        <aside class="admin-side" aria-label="Admin sections">
+            <h2>Administration</h2>
+            <button class="active" data-view="usersView">User Accounts</button>
+            <button data-view="employeesView">Employees</button>
+            <button data-view="attendanceView">Attendance</button>
+        </aside>
+
+        <section class="admin-main">
+            <div id="adminAlert" class="alert" role="alert" aria-live="polite"></div>
+            <section class="admin-view active" id="usersView">
+                <h1>User Accounts</h1>
+                <p>Create, update, and remove customer or employee accounts.</p>
+                <div class="admin-grid">
+                    <form class="admin-card" id="userForm">
+                        <h2 id="userFormTitle">Create User</h2>
+                        <input id="userId" type="hidden">
+                        <div class="form-group"><label for="userUsername">Username *</label><input id="userUsername" required></div>
+                        <div class="form-group"><label for="userPassword">Password <span id="passwordHint">*</span></label><input id="userPassword" type="password"></div>
+                        <div class="form-group"><label for="userRole">Role *</label><select id="userRole" required><option>Customer</option><option>Technician</option><option>Dispatcher</option><option>Admin</option></select></div>
+                        <div class="form-group"><label for="userFirstName">First Name *</label><input id="userFirstName" required></div>
+                        <div class="form-group"><label for="userLastName">Last Name *</label><input id="userLastName" required></div>
+                        <div class="form-group"><label for="userEmail">Email *</label><input id="userEmail" type="email" required></div>
+                        <div class="form-group"><label for="userPhone">Phone</label><input id="userPhone" type="tel"></div>
+                        <div class="form-group"><label for="userAddress">Address</label><textarea id="userAddress"></textarea></div>
+                        <button class="btn btn-primary" type="submit">Save User</button>
+                        <button class="btn btn-secondary" type="button" onclick="resetUserForm()">Clear</button>
+                    </form>
+                    <div class="record-list" id="usersList"></div>
+                </div>
+            </section>
+
+            <section class="admin-view" id="employeesView">
+                <h1>Employees</h1>
+                <p>Review the employees registered in the system.</p>
+                <div class="record-list" id="employeesList"></div>
+            </section>
+
+            <section class="admin-view" id="attendanceView">
+                <h1>Attendance</h1>
+                <p>Review employee time-in records and site locations.</p>
+                <div class="attendance-table" id="attendanceList"></div>
+            </section>
+        </section>
+    </main>
+
+    <script src="script.js?v=4"></script>
+    <script>
+        const adminUser = getCurrentUser();
+        if (!adminUser || adminUser.role !== 'Admin') {
+            window.location.href = adminUser ? 'dashboard.html' : 'login.html';
+        }
+        document.getElementById('adminUsername').textContent = `@${adminUser.username}`;
+        const escapeHtml = value => String(value || '').replace(/[&<>'"]/g, character => ({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[character]));
+
+        document.querySelectorAll('.admin-side button').forEach(button => button.addEventListener('click', () => {
+            document.querySelectorAll('.admin-side button').forEach(item => item.classList.remove('active'));
+            document.querySelectorAll('.admin-view').forEach(view => view.classList.remove('active'));
+            button.classList.add('active');
+            document.getElementById(button.dataset.view).classList.add('active');
+        }));
+
+        function getUserRecord(user) {
+            const account = getAccountRecord(user.id);
+            return account ? account.record : {};
+        }
+
+        function renderUsers() {
+            const container = document.getElementById('usersList');
+            container.innerHTML = '';
+            getAllUsers().forEach(user => {
+                const record = getUserRecord(user);
+                const item = document.createElement('article');
+                item.className = 'record';
+                item.innerHTML = `<h3>${escapeHtml(user.username)}</h3><p><strong>Role:</strong> ${escapeHtml(user.role)}</p><p><strong>Name:</strong> ${escapeHtml(`${record.firstName || ''} ${record.lastName || ''}`)}</p><p><strong>Email:</strong> ${escapeHtml(record.email || 'Not provided')}</p><div class="record-actions"><button class="small-btn edit-btn" type="button">Edit</button><button class="small-btn delete-btn" type="button">Delete</button></div>`;
+                item.querySelector('.edit-btn').onclick = () => editUser(user, record);
+                item.querySelector('.delete-btn').onclick = () => { if (confirm('Delete this user?')) { const result = deleteManagedUser(user.id); if (!result.success) showAlert('adminAlert', result.error, 'error'); else renderAll(); } };
+                container.appendChild(item);
+            });
+        }
+
+        function renderEmployees() {
+            const container = document.getElementById('employeesList');
+            const employees = getAllUsers().filter(user => user.role !== 'Customer');
+            container.innerHTML = employees.length ? '' : '<p class="empty-state">No employees registered.</p>';
+            employees.forEach(user => {
+                const record = getUserRecord(user);
+                const item = document.createElement('article');
+                item.className = 'record';
+                item.innerHTML = `<h3>${escapeHtml(`${record.firstName || user.username} ${record.lastName || ''}`)}</h3><p><strong>Username:</strong> ${escapeHtml(user.username)}</p><p><strong>Role:</strong> ${escapeHtml(user.role)}</p><p><strong>Email:</strong> ${escapeHtml(record.email || 'Not provided')}</p>`;
+                container.appendChild(item);
+            });
+        }
+
+        function renderAttendance() {
+            const attendance = getAttendance().slice().reverse();
+            const container = document.getElementById('attendanceList');
+            if (!attendance.length) { container.innerHTML = '<p class="empty-state">No attendance records yet.</p>'; return; }
+            container.innerHTML = `<table><thead><tr><th>Employee</th><th>Role</th><th>Site</th><th>Address</th><th>Time In</th></tr></thead><tbody>${attendance.map(record => `<tr><td>${escapeHtml(record.employeeName)}</td><td>${escapeHtml(record.role)}</td><td>${escapeHtml(record.siteName)}</td><td>${escapeHtml(record.address)}</td><td>${escapeHtml(new Date(record.timeIn).toLocaleString())}</td></tr>`).join('')}</tbody></table>`;
+        }
+
+        function renderAll() { renderUsers(); renderEmployees(); renderAttendance(); }
+        function editUser(user, record) {
+            document.getElementById('userId').value = user.id;
+            document.getElementById('userUsername').value = user.username;
+            document.getElementById('userPassword').value = '';
+            document.getElementById('userRole').value = user.role;
+            document.getElementById('userFirstName').value = record.firstName || '';
+            document.getElementById('userLastName').value = record.lastName || '';
+            document.getElementById('userEmail').value = record.email || '';
+            document.getElementById('userPhone').value = record.phone || '';
+            document.getElementById('userAddress').value = record.address || '';
+            document.getElementById('userFormTitle').textContent = 'Edit User';
+            document.getElementById('passwordHint').textContent = '(leave blank to keep current)';
+        }
+        function resetUserForm() { document.getElementById('userForm').reset(); document.getElementById('userId').value = ''; document.getElementById('userFormTitle').textContent = 'Create User'; document.getElementById('passwordHint').textContent = '*'; }
+
+        document.getElementById('userForm').addEventListener('submit', event => {
+            event.preventDefault();
+            const id = document.getElementById('userId').value;
+            const data = { username: document.getElementById('userUsername').value.trim(), password: document.getElementById('userPassword').value, role: document.getElementById('userRole').value, firstName: document.getElementById('userFirstName').value.trim(), lastName: document.getElementById('userLastName').value.trim(), email: document.getElementById('userEmail').value.trim(), phone: document.getElementById('userPhone').value.trim(), address: document.getElementById('userAddress').value.trim() };
+            let result;
+            if (id) {
+                result = updateManagedUser(id, data);
+            } else {
+                if (!data.password) { showAlert('adminAlert', 'Password is required for a new user', 'error'); return; }
+                result = createManagedUser(data);
+            }
+            if (!result.success) { showAlert('adminAlert', result.error, 'error'); return; }
+            resetUserForm(); renderAll(); showAlert('adminAlert', 'User saved', 'success');
+        });
+
+        renderAll();
+    </script>
+</body>
+</html>
