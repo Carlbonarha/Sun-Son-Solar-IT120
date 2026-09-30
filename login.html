@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Meta tags for responsive design -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Sun Son Solar</title>
+    
+    <!-- Link to shared CSS file -->
+    <link rel="stylesheet" href="styles.css">
+    
+    <style>
+        /* Login-specific styles inspired by the uploaded design */
+        
+        /* Full viewport container */
+        .wrapper {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+        }
+
+        /* Decorative background elements */
+        .sun-rays {
+            position: absolute;
+            top: -10%;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 150%;
+            height: 500px;
+            pointer-events: none;
+            z-index: 0;
+            opacity: 0.1;
+        }
+
+        .sun-rays svg {
+            width: 100%;
+            height: 100%;
+        }
+
+        /* Center the form on top of decoration */
+        .form-box {
+            position: relative;
+            z-index: 1;
+            max-width: 380px;
+        }
+
+        /* Extra styling for login form */
+        .login-form {
+            background: rgba(255, 255, 255, 0.97);
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 8px 24px rgba(26, 115, 232, 0.15);
+            border-top: 5px solid #ffd400;
+        }
+
+        .login-form h2 {
+            color: #1a73e8;
+            text-align: center;
+            margin-bottom: 10px;
+            font-size: 28px;
+        }
+
+        .login-form .subtitle {
+            text-align: center;
+            color: #888;
+            margin-bottom: 28px;
+            font-size: 14px;
+        }
+
+        /* Input styling */
+        .form-group input {
+            margin-bottom: 8px;
+        }
+
+        /* Forgot password link */
+        .forgot-password {
+            text-align: right;
+            margin: 10px 0 20px;
+            font-size: 13px;
+        }
+
+        .forgot-password a {
+            color: #1a73e8;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .forgot-password a:hover {
+            color: #0c3c7e;
+            text-decoration: underline;
+        }
+
+        /* Divider */
+        .divider {
+            text-align: center;
+            margin: 20px 0;
+            color: #bbb;
+            font-size: 13px;
+            position: relative;
+        }
+
+        .divider::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: #ddd;
+        }
+
+        .divider span {
+            background: white;
+            padding: 0 10px;
+            position: relative;
+        }
+
+        /* Register link */
+        .register-link {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 14px;
+            color: #666;
+        }
+
+        .register-link a {
+            color: #1a73e8;
+            text-decoration: none;
+            font-weight: bold;
+            transition: color 0.3s ease;
+        }
+
+        .register-link a:hover {
+            color: #0c3c7e;
+            text-decoration: underline;
+        }
+
+        /* Alert styling */
+        .alert {
+            margin-bottom: 16px;
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 480px) {
+            .login-form {
+                padding: 30px 20px;
+            }
+
+            .login-form h2 {
+                font-size: 24px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header with Sun Son Solar branding -->
+    <header>
+        <div class="header-logo">🌞 Sun Son Solar</div>
+        <nav class="header-nav">
+            <a href="login.html">Login</a>
+            <a href="register.html">Register</a>
+            <a href="#services">Services</a>
+            <a href="#products">Products</a>
+        </nav>
+    </header>
+
+    <!-- Main login container -->
+    <div class="wrapper">
+        <!-- Decorative sun rays SVG (optional visual element) -->
+        <div class="sun-rays" aria-hidden="true">
+            <svg viewBox="0 0 1000 700" preserveAspectRatio="none">
+                <circle cx="500" cy="200" r="100" fill="currentColor"/>
+                <line x1="500" y1="50" x2="500" y2="0" stroke="currentColor" stroke-width="3"/>
+                <line x1="650" y1="100" x2="700" y2="50" stroke="currentColor" stroke-width="3"/>
+                <line x1="700" y1="200" x2="750" y2="200" stroke="currentColor" stroke-width="3"/>
+            </svg>
+        </div>
+
+        <!-- Login form -->
+        <div class="form-box login-form">
+            <h2>Log In</h2>
+            <p class="subtitle">Welcome back to Sun Son Solar</p>
+
+            <!-- Alert message container (hidden by default) -->
+            <div id="loginAlert" class="alert"></div>
+
+            <!-- Username input -->
+            <div class="form-group">
+                <label for="username">Username</label>
+                <input 
+                    type="text" 
+                    id="username" 
+                    placeholder="Enter your username"
+                    autocomplete="username"
+                >
+            </div>
+
+            <!-- Password input -->
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input 
+                    type="password" 
+                    id="password" 
+                    placeholder="Enter your password"
+                    autocomplete="current-password"
+                >
+            </div>
+
+            <!-- Forgot password link -->
+            <div class="forgot-password">
+                <a href="#">Forgot password?</a>
+            </div>
+
+            <!-- Login button -->
+            <button class="btn btn-primary" onclick="handleLogin()">Log In</button>
+
+            <!-- Divider -->
+            <div class="divider">
+                <span>Don't have an account?</span>
+            </div>
+
+            <!-- Register link -->
+            <div class="register-link">
+                <a href="register.html">Create Account →</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Link to shared script file -->
+    <script src="script.js"></script>
+
+    <!-- Login page specific script -->
+    <script>
+        // Handle login form submission
+        function handleLogin() {
+            // Get input values
+            const username = document.getElementById('username').value.trim();
+            const password = document.getElementById('password').value;
+            const alertElement = document.getElementById('loginAlert');
+
+            // Validate inputs are not empty
+            if (!username || !password) {
+                showAlert('loginAlert', 'Please enter both username and password', 'error');
+                return;
+            }
+
+            // Call login function from shared script
+            const result = login(username, password);
+
+            if (result.success) {
+                // Show success message
+                showAlert('loginAlert', 'Login successful! Redirecting...', 'success');
+                
+                // Redirect to dashboard after 1 second
+                setTimeout(() => {
+                    window.location.href = 'dashboard.html';
+                }, 1000);
+            } else {
+                // Show error message
+                showAlert('loginAlert', result.error, 'error');
+            }
+        }
+
+        // Allow Enter key to submit login form
+        document.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter' && document.getElementById('password')) {
+                handleLogin();
+            }
+        });
+
+        // Load user from session on page load
+        window.addEventListener('load', function() {
+            if (isLoggedIn()) {
+                window.location.href = 'dashboard.html';
+            }
+        });
+    </script>
+</body>
+</html>
