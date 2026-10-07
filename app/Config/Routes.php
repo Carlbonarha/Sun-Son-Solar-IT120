@@ -1,0 +1,64 @@
+<?php
+
+use CodeIgniter\Router\RouteCollection;
+
+/** @var RouteCollection $routes */
+$routes->get('/', 'Home::index');
+$routes->get('login.php', 'Home::index');
+$routes->post('login/check', 'Home::loginCheck');
+$routes->post('register/check', 'Home::registerCheck');
+$routes->get('users/list', 'Home::managedUsers');
+$routes->post('users/save', 'Home::saveManagedUser');
+$routes->post('users/delete', 'Home::deleteManagedUser');
+$routes->post('bookings/create', 'Home::createBooking');
+$routes->get('bookings/list', 'Home::listBookings');
+$routes->post('bookings/status', 'Home::updateBookingStatus');
+$routes->post('attendance/check-in', 'Home::createAttendance');
+$routes->get('attendance/month', 'Home::attendanceForMonth');
+$routes->get('department/summary', 'Home::departmentSummary');
+$routes->get('hr/employees', 'Home::hrEmployeeDirectory');
+$routes->get('catalog/products', 'Home::catalogProducts');
+$routes->get('catalog/services', 'Home::catalogServices');
+$routes->post('catalog/products/save', 'Home::saveCatalogProduct');
+$routes->post('catalog/products/delete', 'Home::deleteCatalogProduct');
+$routes->post('catalog/services/save', 'Home::saveCatalogService');
+$routes->post('catalog/services/delete', 'Home::deleteCatalogService');
+$routes->get('logout', 'Home::logout');
+$routes->get('dashboard.php', 'Home::dashboard');
+$routes->get('customer-dashboard.php', 'Home::customerDashboard');
+$routes->get('technician-dashboard.php', 'Home::technicianDashboard');
+$routes->get('admin-dashboard.php', 'Home::adminDashboard');
+$routes->get('dispatcher-dashboard.php', 'Home::dispatcherDashboard');
+$routes->get('it-dashboard.php', 'Home::itDashboard');
+$routes->get('accounting-dashboard.php', 'Home::accountingDashboard');
+$routes->get('hr-dashboard.php', 'Home::hrDashboard');
+$routes->get('marketing-dashboard.php', 'Home::marketingDashboard');
+$routes->get('sales-dashboard.php', 'Home::salesDashboard');
+$routes->get('customer-service-dashboard.php', 'Home::customerServiceDashboard');
+$routes->get('register.php', 'Home::register');
+$routes->get('services.php', 'Home::services');
+$routes->get('products.php', 'Home::products');
+$routes->get('forgot-password.php', 'Home::forgotPassword');
+$routes->get('profile.php', 'Home::profile');
+$routes->get('schedule.php', 'Home::schedule');
+$routes->get('employee-timein.php', 'Home::employeeTimeIn');
+
+$routes->get('login.html', 'Home::index');
+$routes->get('dashboard.html', 'Home::dashboard');
+$routes->get('customer-dashboard.html', 'Home::customerDashboard');
+$routes->get('technician-dashboard.html', 'Home::technicianDashboard');
+$routes->get('admin-dashboard.html', 'Home::adminDashboard');
+$routes->get('dispatcher-dashboard.html', 'Home::dispatcherDashboard');
+$routes->get('it-dashboard.html', 'Home::itDashboard');
+$routes->get('accounting-dashboard.html', 'Home::accountingDashboard');
+$routes->get('hr-dashboard.html', 'Home::hrDashboard');
+$routes->get('marketing-dashboard.html', 'Home::marketingDashboard');
+$routes->get('sales-dashboard.html', 'Home::salesDashboard');
+$routes->get('customer-service-dashboard.html', 'Home::customerServiceDashboard');
+$routes->get('register.html', 'Home::register');
+$routes->get('services.html', 'Home::services');
+$routes->get('products.html', 'Home::products');
+$routes->get('forgot-password.html', 'Home::forgotPassword');
+$routes->get('profile.html', 'Home::profile');
+$routes->get('schedule.html', 'Home::schedule');
+$routes->get('employee-timein.html', 'Home::employeeTimeIn');

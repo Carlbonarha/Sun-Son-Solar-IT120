@@ -1,72 +1,15 @@
-# 🌞 Sun Son Solar - Web System
+# Sun Son Solar
 
-Web-based management system for Sun Son Solar, built with HTML, CSS, JavaScript, and SQLite.
+CodeIgniter 4 solar services and product catalog with role-based workspaces.
 
----
+## Local setup
 
+1. Point Apache at `public/` and configure the MySQL connection in `app/Config/Database.php`.
+2. Create the configured database, then run `php spark migrate`.
+3. Open `/login.php`. Customers can register; Admin creates staff accounts and assigns departments.
 
-##  Project Files Structure
-=======
-## Project Files Structure
->>>>>>> 16ab10e5a84020dfb520efb9a9c0562f4987ea67
+## Workspaces
 
-```
-sun-son-solar/
-├── index.html (or login.html)      # Login page - start here
-├── register.html                    # User registration page
-├── dashboard.html                   # Main dashboard after login
-├── styles.css                       # Shared CSS styling
-├── script.js                        # Shared JavaScript functions
-├── sun_son_solar_setup.sql          # Database schema (SQLite)
-└── README.md                        # This file
-```
+Admin manages accounts and attendance. Dispatch manages bookings and is the only role that can publish or edit the shared services and products catalog. Technician handles technician-related bookings and check-ins. IT sees basic system status; HR sees the employee directory and attendance; Accounting sees booking totals; Marketing previews public catalog listings; Sales tracks incoming opportunities; Customer Service reviews customer requests. Customers book and track their own services.
 
----
-
-
-
-### Step 1: Set Up Database in VS Code
-
-1. **Install SQLite Extension**
-   - Open VS Code
-   - Go to Extensions (Ctrl+Shift+X)
-   - Search for "SQLite" 
-   - Install "SQLite" by alexcvzz
-
-2. **Create Database File**
-   - Create a new file: `sun_son_solar.db` in your project folder
-   - Right-click the `.db` file → "Open Database"
-   - The database will appear in the SQLite Explorer panel
-
-3. **Run Setup Script**
-   - Open the database in SQLite Explorer
-   - Copy all content from `sun_son_solar_setup.sql`
-   - Right-click the database → "Run Query"
-   - Paste and execute the SQL script
-
-4. **Verify Tables**
-   - Expand the database in SQLite Explorer
-   - You should see these tables:
-     - users
-     - customers
-     - employees
-     - products
-     - services
-     - technician_checkin
-
----
-
-##  Default Login Credentials
-
-The system comes with 2 pre-configured admin accounts:
-
-| Username | Password | Role |
-|----------|----------|------|
-| Kitty Kat16 | K@tSunShine16 | Admin |
-<<<<<<< HEAD
-| admin | admin 123 | Admin |
-=======
-| admin | admin 123 | Admin |
-
-
->>>>>>> 16ab10e5a84020dfb520efb9a9c0562f4987ea67
+Services and Products remain public. Catalog entries, descriptions, and optional photos are stored centrally so Dispatch changes appear to every visitor. Payment amounts are not currently stored; Accounting workspace figures are booking counts only.
