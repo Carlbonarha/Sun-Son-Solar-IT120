@@ -1,5 +1,5 @@
-# Sun Son Solar
-
+# Sun Son Solar - Team niconiconi
+ 
 CodeIgniter 4 solar services and product catalog with role-based workspaces.
 
 ## Local setup
