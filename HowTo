@@ -1,0 +1,68 @@
+# CodeIgniter 4 Project Setup Guide
+
+This guide provides step-by-step instructions to deploy and run this CodeIgniter 4 project on a new local machine or desktop environment using XAMPP and Composer.
+
+---
+
+##  Prerequisites
+Before starting the setup, ensure the following software is installed on the target machine:
+* **XAMPP** (with PHP version 8.1 or higher and MySQL)
+* **Composer** (for managing project dependencies)
+* **Git** (Optional, for cloning via terminal)
+
+---
+
+##  Step-by-Step Installation Setup
+
+### 1. Download the Source Code
+1. Download the repository source code from GitHub (Click **Code ➔ Download ZIP** or use the `git clone` command).
+2. Extract the ZIP files into your local server's web root directory:
+   ```bash
+   C:\xampp\htdocs\your-project-folder
+   ```
+
+### 2. Install Project Dependencies
+Since the core `vendor` and `system` directories are excluded from the repository to optimize storage and security, you must install them locally.
+1. Open your **Command Prompt (CMD)** or Terminal and navigate to the project root directory:
+   ```bash
+   cd C:\xampp\htdocs\your-project-folder
+   ```
+2. Execute the following installation command:
+   ```bash
+   composer install
+   ```
+
+### 3. Environment Configuration (`.env`)
+1. Locate the default file named `env` in the project root directory.
+2. Duplicate the file and rename the copy to **`.env`** (make sure it includes the leading dot).
+3. Open the `.env` file using any text editor (e.g., Notepad, VS Code) and update the local database configuration parameters:
+   ```env
+   database.default.hostname = localhost
+   database.default.database = your_database_name
+   database.default.username = root
+   database.default.password = 
+   database.default.DBDriver = MySQLi
+   ```
+
+### 4. Database Setup & Initialization
+You can initialize the application database using one of the two methods below:
+
+* **Method A (Using the SQL Backup Dump File):**
+  1. Open the XAMPP Control Panel and start both **Apache** and **MySQL** services.
+  2. Access **phpMyAdmin** by navigating to `http://localhost/phpmyadmin/` in your browser.
+  3. Create a new empty database matching the name specified in your `.env` file.
+  4. Select your newly created database, navigate to the **Import** tab at the top, select the `sun_son_solar_setup.sql` file located in the project root directory, and click **Go / Import**.
+
+* **Method B (Using CodeIgniter Database Migrations):**
+  1. After creating an empty database in phpMyAdmin and configuring the connection string in your `.env` file, simply run the following terminal command at your project root:
+     ```bash
+     php spark migrate
+     ```
+
+### 5. Running the Local Development Server
+To ensure strict structural URL routing and proper base URL framework execution:
+1. In your active terminal terminal path (`C:\xampp\htdocs\your-project-folder`), start the framework's local development server engine:
+   ```bash
+   php spark serve
+   ```
+2. Open your web browser and navigate to the network address provided by the terminal (typically **`http://localhost:8080`**).
