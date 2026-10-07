@@ -4,7 +4,7 @@ Web-based management system for Sun Son Solar, built with HTML, CSS, JavaScript,
 
 ---
 
-<<<<<<< HEAD
+
 ##  Project Files Structure
 =======
 ## Project Files Structure
@@ -23,7 +23,7 @@ sun-son-solar/
 
 ---
 
-##  Getting Started
+
 
 ### Step 1: Set Up Database in VS Code
 
