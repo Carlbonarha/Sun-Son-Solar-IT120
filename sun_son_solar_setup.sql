@@ -81,11 +81,11 @@ CREATE TABLE IF NOT EXISTS technician_checkin (
 -- INSERT INITIAL DATA
 -- ============================================
 
--- Magpasok ng Admin Users (Galing sa data mo)
+-- Insert Admin Users 
 INSERT INTO users (username, password, role) VALUES ('Kitty Kat16', 'K@tSunShine16', 'Admin');
 INSERT INTO users (username, password, role) VALUES ('admin', 'admin 123', 'Admin');
 
--- Magpasok ng Sample Products
+-- Insert ng Sample Products
 INSERT INTO products (product_name, category, description, price) VALUES 
 ('High-Efficiency Solar Panels', 'Panels', 'High-efficiency solar panels with 25-year warranty', 350.00),
 ('Solar Inverters', 'Inverters', 'Convert DC to AC power efficiently', 2000.00),
@@ -93,7 +93,7 @@ INSERT INTO products (product_name, category, description, price) VALUES
 ('Racking Systems', 'Racking and Mounting', 'Durable mounting systems for any roof type', 1200.00),
 ('Solar Wiring Kit', 'Wires', 'Safe and certified solar electrical wiring', 300.00);
 
--- Magpasok ng Sample Services
+-- Insert Sample Services
 INSERT INTO services (service_name, service_type, description) VALUES 
 ('Free Consultation', 'Consultation', 'Free initial consultation to assess your energy needs'),
 ('System Design', 'Designing', 'Custom solar system design by our engineers'),
