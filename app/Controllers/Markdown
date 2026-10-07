@@ -1,0 +1,5 @@
+# Project Ecosystem Context
+- **Framework:** CodeIgniter 4 (PHP 8.2+)
+- **Database:** MySQL via XAMPP (`sun_son_solar_setup`)
+- **Authentication Flow:** Single-page AJAX Fetch in `login.php` -> POST request to `login/check` in `Home.php` -> Validates plain text passwords in `users` table -> JSON redirect based on `role` column ('Admin', 'Dispatcher', 'Technician').
+- **Routing Style:** Direct mapping in `Routes.php` (Never drop the /public context or use index.php unless explicitly requested).

@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Meta tags for responsive design -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register - 🌞 Sun Son Solar</title>
+    
+    <!-- Link to shared CSS file -->
+    <link rel="stylesheet" href="<?= base_url('CSS/styles.css') ?>">
+    
+    <style>
+        /* Registration-specific styles */
+        
+        .wrapper {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 40px 20px;
+        }
+
+        /* Wider form for registration -->*/
+        .form-box {
+            max-width: 500px;
+            background: rgba(255, 255, 255, 0.97);
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 8px 24px rgba(26, 115, 232, 0.15);
+            border-top: 5px solid #ffd400;
+        }
+
+        .form-box h2 {
+            color: #1a73e8;
+            text-align: center;
+            margin-bottom: 10px;
+            font-size: 28px;
+        }
+
+        .form-box .subtitle {
+            text-align: center;
+            color: #888;
+            margin-bottom: 28px;
+            font-size: 14px;
+        }
+
+        /* Two column layout for name fields */
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+            margin-bottom: 16px;
+        }
+
+        .form-row .form-group {
+            margin-bottom: 0;
+        }
+
+        /* Account type selector */
+        .account-type-selector {
+            display: flex;
+            gap: 16px;
+            margin-bottom: 24px;
+        }
+
+        .account-type-radio {
+            flex: 1;
+        }
+
+        .account-type-radio input[type="radio"] {
+            display: none;
+        }
+
+        .account-type-radio label {
+            display: block;
+            padding: 12px;
+            text-align: center;
+            border: 2px solid #ddd;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 500;
+            background: white;
+            color: #666;
+        }
+
+        .account-type-radio input[type="radio"]:checked + label {
+            background: #1a73e8;
+            color: white;
+            border-color: #1a73e8;
+        }
+
+        .account-type-radio label:hover {
+            border-color: #1a73e8;
+            background: #f0f7ff;
+        }
+
+        /* Department field (hidden by default, shown for employees) */
+        .department-field {
+            display: none;
+        }
+
+        .department-field.show {
+            display: block;
+        }
+
+        /* Form buttons */
+        .form-actions {
+            display: flex;
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        .form-actions button {
+            flex: 1;
+        }
+
+        /* Login link */
+        .login-link {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 14px;
+            color: #666;
+        }
+
+        .login-link a {
+            color: #1a73e8;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .login-link a:hover {
+            text-decoration: underline;
+        }
+
+        /* Alert styling */
+        .alert {
+            margin-bottom: 16px;
+        }
+
+        /* Responsive */
+        @media (max-width: 620px) {
+            .wrapper {
+                padding: 20px 10px;
+            }
+
+            .form-box {
+                padding: 30px 20px;
+                max-width: 100%;
+            }
+
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+
+            .form-actions {
+                flex-direction: column;
+            }
+
+            .account-type-selector {
+                flex-direction: column;
+                gap: 12px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header with Sun Son Solar branding -->
+    <header>
+        <div class="header-logo">🌞 Sun Son Solar</div>
+        <nav class="header-nav">
+            <a href="<?= site_url('login.php') ?>">Login</a>
+            <a href="<?= site_url('register.php') ?>">Register</a>
+            <a href="<?= site_url('services.php') ?>">Services</a>
+            <a href="<?= site_url('products.php') ?>">Products</a>
+        </nav>
+    </header>
+
+    <!-- Main registration container -->
+    <div class="wrapper">
+        <!-- Registration form -->
+        <div class="form-box">
+            <h2>Create Account</h2>
+            <p class="subtitle">Join Sun Son Solar community</p>
+
+            <!-- Alert message container (hidden by default) -->
+            <div id="registerAlert" class="alert"></div>
+
+            <!-- Account type selector -->
+            <div class="account-type-selector">
+                <div class="account-type-radio">
+                    <input 
+                        type="radio" 
+                        id="customerType" 
+                        name="accountType" 
+                        value="customer" 
+                        checked
+                        onchange="updateFormForAccountType('customer')"
+                    >
+                    <label for="customerType">Customer</label>
+                </div>
+                <div class="account-type-radio">
+                    <input 
+                        type="radio" 
+                        id="employeeType" 
+                        name="accountType" 
+                        value="employee"
+                        onchange="updateFormForAccountType('employee')"
+                    >
+                    <label for="employeeType">Employee</label>
+                </div>
+            </div>
+
+            <!-- First Name and Last Name row -->
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="firstName">First Name *</label>
+                    <input type="text" id="firstName" placeholder="First name" required>
+                </div>
+                <div class="form-group">
+                    <label for="lastName">Last Name *</label>
+                    <input type="text" id="lastName" placeholder="Last name" required>
+                </div>
+            </div>
+
+            <!-- Middle Name and Birthdate row -->
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="middleName">Middle Name</label>
+                    <input type="text" id="middleName" placeholder="Middle name (optional)">
+                </div>
+                <div class="form-group">
+                    <label for="birthdate">Birthdate</label>
+                    <input type="date" id="birthdate">
+                </div>
+            </div>
+
+            <!-- Gender -->
+            <div class="form-group">
+                <label for="gender">Gender</label>
+                <select id="gender">
+                    <option value="">Select gender</option>
+                    <option value="Male">Male</option>
+                    <option value="Female">Female</option>
+                    <option value="Other">Other</option>
+                </select>
+            </div>
+
+            <!-- Email -->
+            <div class="form-group">
+                <label for="email">Email Address *</label>
+                <input type="email" id="email" placeholder="your.email@example.com" required>
+            </div>
+
+            <!-- Phone Number -->
+            <div class="form-group">
+                <label for="phone">Phone Number</label>
+                <input type="tel" id="phone" placeholder="09XXXXXXXXX">
+            </div>
+
+            <!-- Address -->
+            <div class="form-group">
+                <label for="address">Address</label>
+                <textarea id="address" placeholder="Your complete address"></textarea>
+            </div>
+
+            <!-- Department (only for employees) -->
+            <div class="form-group department-field" id="departmentField">
+                <label for="department">Department *</label>
+                <select id="department">
+                    <option value="">Select department</option>
+                    <option value="Technician">Technician</option>
+                    <option value="Dispatcher">Dispatcher</option>
+                </select>
+            </div>
+
+            <!-- Username -->
+            <div class="form-group">
+                <label for="regUsername">Username *</label>
+                <input type="text" id="regUsername" placeholder="Choose a username" required>
+            </div>
+
+            <!-- Password -->
+            <div class="form-group">
+                <label for="regPassword">Password *</label>
+                <input type="password" id="regPassword" placeholder="At least 6 characters" required>
+            </div>
+
+            <!-- Form actions -->
+            <div class="form-actions">
+                <button class="btn btn-primary" onclick="handleRegister()">Create Account</button>
+                <button class="btn btn-secondary" onclick="window.location.href='login.html'">Back to Login</button>
+            </div>
+
+            <!-- Login link -->
+            <div class="login-link">
+                Already have an account? <a href="login.html">Log in here</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Link to shared script file -->
+    <script src="<?= base_url('JavaScript/script.js?v=7') ?>"></script>
+
+    <!-- Registration page specific script -->
+    <script>
+        // Update form based on account type selection
+        function updateFormForAccountType(type) {
+            const departmentField = document.getElementById('departmentField');
+            
+            if (type === 'employee') {
+                // Show department field for employees
+                departmentField.classList.add('show');
+            } else {
+                // Hide department field for customers
+                departmentField.classList.remove('show');
+            }
+        }
+
+        // Handle registration form submission
+        async function handleRegister() {
+            // Get form values
+            const accountType = document.querySelector('input[name="accountType"]:checked').value;
+            const firstName = document.getElementById('firstName').value.trim();
+            const lastName = document.getElementById('lastName').value.trim();
+            const middleName = document.getElementById('middleName').value.trim();
+            const birthdate = document.getElementById('birthdate').value;
+            const gender = document.getElementById('gender').value;
+            const email = document.getElementById('email').value.trim();
+            const phone = document.getElementById('phone').value.trim();
+            const address = document.getElementById('address').value.trim();
+            const username = document.getElementById('regUsername').value.trim();
+            const password = document.getElementById('regPassword').value;
+            const department = document.getElementById('department').value;
+
+            const alertElement = document.getElementById('registerAlert');
+
+            // Prepare form data object
+            const formData = {
+                accountType: accountType,
+                firstName: firstName,
+                lastName: lastName,
+                middleName: middleName,
+                birthdate: birthdate,
+                gender: gender,
+                email: email,
+                phone: phone,
+                address: address,
+                username: username,
+                password: password,
+                department: department
+            };
+
+            // Validate form data using shared function
+            const validation = validateFormData(formData, accountType);
+
+            if (!validation.isValid) {
+                // Show validation errors
+                showAlert('registerAlert', validation.errors.join(', '), 'error');
+                return;
+            }
+
+            const role = accountType === 'employee' ? department : 'Customer';
+            const submitButton = document.querySelector('.form-actions .btn-primary');
+            submitButton.disabled = true;
+
+            try {
+                const response = await fetch('<?= site_url('register/check') ?>', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded',
+                        'X-Requested-With': 'XMLHttpRequest'
+                    },
+                    body: new URLSearchParams({
+                        username,
+                        password,
+                        role,
+                        firstName,
+                        lastName,
+                        middleName,
+                        birthdate,
+                        gender,
+                        email,
+                        phone,
+                        address
+                    })
+                });
+                const result = await response.json();
+
+                if (!response.ok || !result.success) {
+                    showAlert('registerAlert', result.error || 'Hindi nagtagumpay ang paggawa ng account.', 'error');
+                    return;
+                }
+
+                const localResult = registerUser(formData, result.user.id);
+                if (!localResult.success) {
+                    showAlert('registerAlert', localResult.error, 'error');
+                    return;
+                }
+
+                // Show success message
+                showAlert('registerAlert', 'Account created successfully! Redirecting to login...', 'success');
+                
+                // Clear form
+                clearForm('registerForm');
+                
+                // Redirect to login after 2 seconds
+                setTimeout(() => {
+                    window.location.href = '<?= site_url('login.php') ?>';
+                }, 2000);
+            } catch (error) {
+                console.error('Registration error:', error);
+                showAlert('registerAlert', 'May problema sa koneksyon sa server.', 'error');
+            } finally {
+                submitButton.disabled = false;
+            }
+        }
+
+        // Allow Enter key to submit registration form
+        document.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter' && document.getElementById('regPassword')) {
+                handleRegister();
+            }
+        });
+
+        // Redirect if already logged in
+        window.addEventListener('load', function() {
+            if (isLoggedIn()) {
+                window.location.href = getRoleHome(getCurrentUser().role);
+            }
+        });
+    </script>
+</body>
+</html>
