@@ -9,6 +9,7 @@
         .catalog-page { display: block; width: min(1240px, calc(100% - 40px)); margin: 34px auto; padding: 0; animation: catalog-enter .7s cubic-bezier(.2, .75, .25, 1) both; }
         @keyframes catalog-enter { from { opacity: 0; transform: translateY(18px); } to { opacity: 1; transform: translateY(0); } }
         .catalog-intro { margin: 10px 0 24px; color: #64748b; }
+        .catalog-note { margin: -12px 0 24px; padding: 14px 16px; border-left: 4px solid #e6a700; border-radius: 5px; background: #fff8e5; color: #5e4a16; line-height: 1.5; }
         .catalog-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); grid-auto-rows: minmax(230px, auto); gap: 16px; }
         .product-card { padding: 0; overflow: hidden; display: flex; flex-direction: column; min-width: 0; }
         .product-card:nth-child(5n + 1) { grid-column: span 2; grid-row: span 2; }
@@ -73,7 +74,8 @@
 
     <main class="container catalog-page">
         <h1>Our Products</h1>
-        <p class="catalog-intro">Explore product details and photo previews from Sun Son Solar.</p>
+        <p class="catalog-intro">Explore solar equipment and accessories that may be discussed during a project assessment.</p>
+        <p class="catalog-note">Product specifications and prices vary by model, location, and project. Confirm details with the team before purchase. Images are illustrations, not manufacturer photographs.</p>
         <div class="catalog-grid" id="productsContainer" aria-live="polite" aria-busy="true">
             <div class="catalog-loading" role="status"><span class="sun-loader" aria-hidden="true">☀</span><span>Gathering your products…</span></div>
             <?php for ($i = 0; $i < 4; $i++): ?>

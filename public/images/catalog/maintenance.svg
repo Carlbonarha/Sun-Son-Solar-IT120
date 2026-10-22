@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 400" role="img" aria-labelledby="title desc">
+  <title id="title">Illustration of solar panel maintenance</title>
+  <desc id="desc">A technician safely inspects a rooftop solar panel array.</desc>
+  <defs>
+    <linearGradient id="sky" x2="0" y2="1"><stop stop-color="#d1f1ff"/><stop offset="1" stop-color="#f5fbff"/></linearGradient>
+    <linearGradient id="panel" x2="1" y2="1"><stop stop-color="#1768a7"/><stop offset="1" stop-color="#123354"/></linearGradient>
+  </defs>
+  <rect width="640" height="400" fill="url(#sky)"/>
+  <circle cx="502" cy="77" r="43" fill="#ffd05b"/>
+  <path d="M0 321h640v79H0z" fill="#a5cd9b"/>
+  <path d="m33 254 220-139 243 128v110H33z" fill="#fff5ea"/>
+  <path d="m15 259 240-161 260 138-17 31-242-127L34 291z" fill="#a24e39"/>
+  <path d="m100 205 151-98 189 99-144 89z" fill="url(#panel)" stroke="#c8eafa" stroke-width="5"/>
+  <path d="m171 160 22 109m30-128 21 111m33-94 19 110m35-92 15 109m37-90 13 107m-197-71 210-8m-182 38 212-10" stroke="#91c7e9" stroke-width="3"/>
+  <circle cx="458" cy="254" r="24" fill="#d99467"/>
+  <path d="M431 281h57l13 65h-84z" fill="#2d6a83"/>
+  <path d="m438 344-11 37m49-37 12 37" stroke="#314f68" stroke-width="11" stroke-linecap="round"/>
+  <path d="m441 291-39 21m74-22 34 17" stroke="#d99467" stroke-width="9" stroke-linecap="round"/>
+  <path d="m394 311 45-5" stroke="#e5ac4c" stroke-width="9" stroke-linecap="round"/>
+  <path d="M84 310c73 17 121 19 182 0" fill="none" stroke="#fff" stroke-opacity=".7" stroke-width="5"/>
+</svg>

@@ -54,12 +54,24 @@ $dashboardUrl = session()->get('isLoggedIn') === true
         .section-heading p { margin: 0; color: var(--muted); line-height: 1.65; }
         .benefit-grid, .service-grid, .account-grid, .faq-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 18px; }
         .feature-card { height: 100%; padding: 25px; border: 1px solid var(--line); border-radius: 12px; background: white; box-shadow: 0 8px 24px rgba(18, 59, 109, .055); }
+        .feature-photo { display: block; width: calc(100% + 50px); height: 180px; margin: -25px -25px 20px; border-radius: 11px 11px 0 0; object-fit: cover; background: #eaf2fb; }
         .feature-icon { display: grid; width: 44px; height: 44px; place-items: center; margin-bottom: 17px; border-radius: 12px; background: #eaf2fb; color: var(--blue); font-size: 1.35rem; font-weight: 700; }
         .feature-card h3 { margin: 0 0 10px; color: var(--navy); font-size: 1.17rem; }
         .feature-card p { margin: 0; color: var(--muted); line-height: 1.65; }
         .service-card { display: flex; flex-direction: column; min-height: 220px; }
         .service-card .text-link { margin-top: auto; padding-top: 18px; font-weight: 700; text-decoration: none; }
         .service-card .text-link:hover { text-decoration: underline; }
+        .catalog-preview { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 18px; }
+        .catalog-preview-card { display: flex; min-width: 0; flex-direction: column; overflow: hidden; padding: 0; }
+        .catalog-preview-photo { width: 100%; height: 190px; object-fit: cover; background: #eaf2fb; }
+        .catalog-preview-copy { display: flex; height: 100%; flex-direction: column; padding: 20px; }
+        .catalog-preview-copy h3 { margin: 0 0 10px; color: var(--navy); }
+        .catalog-preview-copy p { color: var(--muted); line-height: 1.6; }
+        .catalog-preview-price { font-weight: 700; }
+        .catalog-preview-link { margin-top: auto; padding-top: 12px; font-weight: 700; }
+        .catalog-preview-note { margin: 16px 0 0; color: var(--muted); font-size: .9rem; line-height: 1.55; }
+        .catalog-preview-status { grid-column: 1 / -1; color: var(--muted); }
+        .catalog-preview-placeholder { display: grid; min-height: 190px; place-items: center; background: linear-gradient(135deg, #eef5fa, #dce9f4); color: #56718b; font-weight: 700; }
         .story-panel { display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: center; gap: 24px; padding: 30px; border: 1px solid var(--line); border-left: 5px solid var(--blue); border-radius: 12px; background: white; }
         .story-panel h3 { margin: 0 0 8px; color: var(--navy); }
         .story-panel p { margin: 0; color: var(--muted); line-height: 1.6; }
@@ -90,6 +102,7 @@ $dashboardUrl = session()->get('isLoggedIn') === true
             .site-header { position: static; align-items: flex-start; flex-direction: column; padding: 16px 20px; }
             .main-nav { justify-content: flex-start; gap: 12px 16px; }
             .benefit-grid, .service-grid, .account-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+            .catalog-preview { grid-template-columns: repeat(2, minmax(0, 1fr)); }
             .footer-inner { grid-template-columns: repeat(2, minmax(0, 1fr)); }
         }
         @media (max-width: 540px) {
@@ -97,6 +110,7 @@ $dashboardUrl = session()->get('isLoggedIn') === true
             .section { width: min(100% - 28px, 1120px); padding: 52px 0; }
             .section--soft { width: 100%; padding-right: 14px; padding-left: 14px; }
             .benefit-grid, .service-grid, .account-grid, .faq-grid, .footer-inner { grid-template-columns: 1fr; }
+            .catalog-preview { grid-template-columns: 1fr; }
             .story-panel, .contact-panel { align-items: flex-start; grid-template-columns: 1fr; flex-direction: column; }
             .contact-panel .button { align-self: flex-start; }
         }
@@ -168,27 +182,41 @@ $dashboardUrl = session()->get('isLoggedIn') === true
             </div>
             <div class="service-grid">
                 <article class="feature-card service-card">
+                    <img class="feature-photo" src="<?= base_url('images/catalog/consultation.svg') ?>" alt="Illustration of a solar consultation">
                     <div class="feature-icon" aria-hidden="true">◎</div>
                     <h3>Consultation</h3>
-                    <p>Discuss your goals, property, energy use, and questions as a starting point for exploring solar options.</p>
+                    <p>Review your goals, recent electricity use, roof or site conditions, and questions. This discovery conversation helps identify what a qualified assessment should verify.</p>
                     <a class="text-link" href="<?= site_url('quote.php') ?>">Ask about a consultation →</a>
                 </article>
                 <article class="feature-card service-card">
+                    <img class="feature-photo" src="<?= base_url('images/catalog/installation.svg') ?>" alt="Illustration of a rooftop solar installation">
                     <div class="feature-icon" aria-hidden="true">⌂</div>
                     <h3>Installation</h3>
-                    <p>Explore the installation process and the project details that need to be assessed for your property.</p>
+                    <p>Discuss a design-led installation plan, equipment, access, and scheduling. Final scope, approvals, and site suitability must be confirmed before work is agreed.</p>
                     <a class="text-link" href="<?= site_url('quote.php') ?>">Discuss an installation →</a>
                 </article>
                 <article class="feature-card service-card">
+                    <img class="feature-photo" src="<?= base_url('images/catalog/maintenance.svg') ?>" alt="Illustration of solar system maintenance">
                     <div class="feature-icon" aria-hidden="true">↻</div>
                     <h3>Maintenance</h3>
-                    <p>Ask about maintaining a solar installation and the service support available for your system.</p>
+                    <p>Ask about inspection, cleaning, monitoring, or troubleshooting options. Recommendations depend on the equipment, access conditions, and system history.</p>
                     <a class="text-link" href="<?= site_url('quote.php') ?>">Ask about maintenance →</a>
                 </article>
             </div>
             <div class="actions" style="margin-top: 24px;">
                 <a class="button" href="<?= site_url('services.php') ?>">Browse service details</a>
             </div>
+        </section>
+
+        <section class="section" id="products" aria-labelledby="productsHeading">
+            <div class="section-heading">
+                <h2 id="productsHeading">Solar products</h2>
+                <p>Explore equipment categories that could be considered during system planning. The right equipment depends on a site-specific design.</p>
+            </div>
+            <div class="catalog-preview" id="homeProducts" aria-live="polite" aria-busy="true">
+                <p class="catalog-preview-status" role="status">Loading products…</p>
+            </div>
+            <p class="catalog-preview-note">Product specifications and prices vary by model, location, and project. Confirm details with the team. The images are illustrations, not manufacturer photographs. <a href="<?= site_url('products.php') ?>">Browse all product details</a>.</p>
         </section>
 
         <section class="section" id="stories" aria-labelledby="storiesHeading">
@@ -353,6 +381,64 @@ $dashboardUrl = session()->get('isLoggedIn') === true
                 window.setInterval(() => show(current + 1), 8000);
             }
         })().catch(error => console.error('Could not load published customer stories.', error));
+        (async function loadHomeProducts() {
+            const container = document.getElementById('homeProducts');
+            try {
+                const response = await fetch('<?= site_url('catalog/products') ?>', { headers: { 'X-Requested-With': 'XMLHttpRequest' } });
+                const result = await response.json();
+                if (!response.ok || !result.success) throw new Error(result.error || 'Could not load products.');
+                container.replaceChildren();
+                container.setAttribute('aria-busy', 'false');
+                const products = result.products.slice(0, 3);
+                if (!products.length) {
+                    const empty = document.createElement('p');
+                    empty.className = 'catalog-preview-status';
+                    empty.textContent = 'No products are listed yet.';
+                    container.appendChild(empty);
+                    return;
+                }
+                products.forEach(product => {
+                    const card = document.createElement('article');
+                    card.className = 'feature-card catalog-preview-card';
+                    if (product.photo) {
+                        const image = document.createElement('img');
+                        image.className = 'catalog-preview-photo';
+                        image.src = product.photo;
+                        image.alt = `Illustration of ${product.name}`;
+                        image.loading = 'lazy';
+                        card.appendChild(image);
+                    } else {
+                        const placeholder = document.createElement('div');
+                        placeholder.className = 'catalog-preview-placeholder';
+                        placeholder.textContent = 'PRODUCT ILLUSTRATION';
+                        card.appendChild(placeholder);
+                    }
+                    const copy = document.createElement('div');
+                    copy.className = 'catalog-preview-copy';
+                    const title = document.createElement('h3');
+                    title.textContent = product.name;
+                    const description = document.createElement('p');
+                    description.textContent = product.description;
+                    const price = document.createElement('p');
+                    price.className = 'catalog-preview-price';
+                    price.textContent = product.price;
+                    const link = document.createElement('a');
+                    link.className = 'catalog-preview-link';
+                    link.href = '<?= site_url('products.php') ?>';
+                    link.textContent = 'View product details';
+                    copy.append(title, description, price, link);
+                    card.appendChild(copy);
+                    container.appendChild(card);
+                });
+            } catch (error) {
+                container.setAttribute('aria-busy', 'false');
+                const message = document.createElement('p');
+                message.className = 'catalog-preview-status';
+                message.textContent = 'Products are temporarily unavailable. Please try the products page again later.';
+                container.replaceChildren(message);
+                console.error('Could not load products.', error);
+            }
+        })();
     </script>
 </body>
 </html>
