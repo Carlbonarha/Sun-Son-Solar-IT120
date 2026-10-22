@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 400" role="img" aria-labelledby="title desc">
+  <title id="title">Illustration of a home solar battery</title>
+  <desc id="desc">A compact battery unit with a green charge indicator in a bright home.</desc>
+  <defs>
+    <linearGradient id="room" x2="0" y2="1"><stop stop-color="#e7f6ff"/><stop offset="1" stop-color="#fff8e9"/></linearGradient>
+    <linearGradient id="battery" x2="1" y2="1"><stop stop-color="#fff"/><stop offset="1" stop-color="#d7e4eb"/></linearGradient>
+  </defs>
+  <rect width="640" height="400" fill="url(#room)"/>
+  <path d="M0 326h640" stroke="#d8c6a7" stroke-width="8"/>
+  <rect x="185" y="67" width="260" height="274" rx="30" fill="#b2c7d2" opacity=".45"/>
+  <rect x="171" y="53" width="260" height="274" rx="30" fill="url(#battery)" stroke="#adc2cd" stroke-width="4"/>
+  <rect x="193" y="83" width="216" height="196" rx="20" fill="#f9fcfd"/>
+  <rect x="216" y="104" width="170" height="80" rx="12" fill="#173f62"/>
+  <path d="M245 124h108M245 146h72M245 166h91" stroke="#aee8ce" stroke-width="7" stroke-linecap="round"/>
+  <rect x="230" y="207" width="144" height="30" rx="15" fill="#dcebe7"/>
+  <rect x="230" y="207" width="101" height="30" rx="15" fill="#4ab98e"/>
+  <circle cx="300" cy="301" r="7" fill="#50bd92"/>
+  <path d="M474 113v132m-30-66h60" stroke="#f1b942" stroke-width="9" stroke-linecap="round"/>
+  <circle cx="474" cy="179" r="55" fill="none" stroke="#f1b942" stroke-width="5" opacity=".45"/>
+  <path d="M0 355c106-22 184-9 275 5s216 2 365-21" fill="none" stroke="#98c999" stroke-width="18" opacity=".65"/>
+</svg>

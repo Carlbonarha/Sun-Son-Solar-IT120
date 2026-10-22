@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 400" role="img" aria-labelledby="title desc">
+  <title id="title">Illustration of a solar consultation</title>
+  <desc id="desc">A customer and an advisor review a solar roof plan and energy chart.</desc>
+  <defs>
+    <linearGradient id="bg" x2="0" y2="1"><stop stop-color="#c8edff"/><stop offset="1" stop-color="#f7fbf1"/></linearGradient>
+  </defs>
+  <rect width="640" height="400" fill="url(#bg)"/>
+  <circle cx="519" cy="75" r="39" fill="#ffc84a"/>
+  <path d="M0 284c92-52 159-37 250 1s219 26 390-20v135H0z" fill="#9ecb96"/>
+  <path d="m370 216 100-67 127 72v77H370z" fill="#fff5e8"/>
+  <path d="m352 222 121-85 134 78-13 20-121-71-108 75z" fill="#a94f36"/>
+  <path d="m422 191 52-37 82 48-53 34z" fill="#145b91" stroke="#d9f1ff" stroke-width="3"/>
+  <rect x="437" y="241" width="28" height="50" fill="#9bd0e7"/>
+  <rect x="45" y="105" width="275" height="200" rx="18" fill="#fff" stroke="#b5ced7" stroke-width="4"/>
+  <path d="M80 145h155" stroke="#184a70" stroke-width="11" stroke-linecap="round"/>
+  <path d="M80 177h107" stroke="#9db3bf" stroke-width="8" stroke-linecap="round"/>
+  <rect x="80" y="206" width="205" height="70" rx="9" fill="#eef7fa"/>
+  <path d="M98 257h31v-23h31v-12h31v-13h31v-12h41" fill="none" stroke="#4caf8a" stroke-width="8" stroke-linejoin="round"/>
+  <circle cx="368" cy="321" r="32" fill="#d58a5b"/>
+  <path d="M337 361c4-38 58-38 63 0" fill="#315c83"/>
+  <circle cx="317" cy="335" r="29" fill="#f0bb8a"/>
+  <path d="M287 373c4-36 55-36 61 0" fill="#e8973f"/>
+</svg>

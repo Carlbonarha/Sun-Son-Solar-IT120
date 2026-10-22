@@ -155,6 +155,10 @@ class Home extends BaseController
         $products = \Config\Database::connect()->table('catalog_products')
             ->select('id, name, category, price, description, photo')
             ->orderBy('id')->get()->getResultArray();
+        foreach ($products as &$product) {
+            $product['photo'] = $this->catalogPhotoUrl($product['photo']);
+        }
+        unset($product);
 
         return $this->response->setJSON(['success' => true, 'products' => $products]);
     }
@@ -164,6 +168,10 @@ class Home extends BaseController
         $services = \Config\Database::connect()->table('catalog_services')
             ->select('id, name, service_type AS type, description, photo')
             ->orderBy('id')->get()->getResultArray();
+        foreach ($services as &$service) {
+            $service['photo'] = $this->catalogPhotoUrl($service['photo']);
+        }
+        unset($service);
 
         return $this->response->setJSON(['success' => true, 'services' => $services]);
     }
@@ -1839,6 +1847,18 @@ class Home extends BaseController
         }
 
         return $photo;
+    }
+
+    private function catalogPhotoUrl(?string $photo): ?string
+    {
+        if ($photo === null || $photo === '') {
+            return null;
+        }
+        if (str_starts_with($photo, 'data:image/') || preg_match('~^(?:https?:)?//~i', $photo) === 1) {
+            return $photo;
+        }
+
+        return base_url(ltrim($photo, '/'));
     }
 
     private function persistCatalogEntry(string $table, mixed $id, array $fields)

@@ -57,6 +57,8 @@
         .service-item:nth-child(4n + 1) .service-photo, .service-item:nth-child(4n + 1) .service-photo-placeholder { height: 250px; }
         .service-photo-placeholder { display: grid; place-items: center; color: #56718b; font-weight: 700; letter-spacing: .04em; background: linear-gradient(135deg, #eef5fa, #dce9f4); }
         .service-copy { padding: 18px; }
+        .catalog-note { margin: -12px 0 24px; padding: 14px 16px; border-left: 4px solid #e6a700; border-radius: 5px; background: #fff8e5; color: #5e4a16; line-height: 1.5; }
+        .service-type { margin: 0 0 7px; color: #55718a; font-size: .78rem; font-weight: 700; letter-spacing: .07em; text-transform: uppercase; }
         .service-copy h2 {
             color: #1a73e8;
             font-size: 18px;
@@ -131,7 +133,7 @@
     <main class="page-wrapper">
         <section class="content-box">
             <h1>Our Services</h1>
-            <p>Explore the solar services available from Sun Son Solar.</p>
+            <p>Explore solar services, from an initial site discussion through installation and ongoing support. Final scope and availability depend on your property and assessment.</p>
             <div class="service-list" id="servicesContainer" aria-live="polite" aria-busy="true">
                 <div class="catalog-loading" role="status"><span class="sun-loader" aria-hidden="true">☀</span><span>Gathering your services…</span></div>
                 <?php for ($i = 0; $i < 4; $i++): ?>
@@ -183,9 +185,12 @@
                     copy.className = 'service-copy';
                     const title = document.createElement('h2');
                     title.textContent = service.name;
+                    const type = document.createElement('p');
+                    type.className = 'service-type';
+                    type.textContent = service.type;
                     const description = document.createElement('p');
                     description.textContent = service.description;
-                    copy.append(title, description);
+                    copy.append(type, title, description);
                     item.appendChild(copy);
                     servicesContainer.appendChild(item);
                 });

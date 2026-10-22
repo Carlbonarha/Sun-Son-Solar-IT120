@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 400" role="img" aria-labelledby="title desc">
+  <title id="title">Illustration of a rooftop solar installation</title>
+  <desc id="desc">A technician checks a solar array on a house roof in sunny weather.</desc>
+  <defs>
+    <linearGradient id="sky" x2="0" y2="1"><stop stop-color="#9bdcff"/><stop offset="1" stop-color="#f1fbff"/></linearGradient>
+    <linearGradient id="panel" x2="1" y2="1"><stop stop-color="#1e73ad"/><stop offset="1" stop-color="#092c58"/></linearGradient>
+  </defs>
+  <rect width="640" height="400" fill="url(#sky)"/>
+  <circle cx="520" cy="74" r="42" fill="#ffd05b"/>
+  <path d="M0 317c96-34 180-30 278 0s222 30 362-12v95H0z" fill="#8fc38f"/>
+  <path d="m37 246 217-136 251 131v109H37z" fill="#fff4e8"/>
+  <path d="m19 250 235-158 270 139-17 31-251-128L38 282z" fill="#a14d37"/>
+  <path d="m116 197 132-84 188 96-134 83z" fill="url(#panel)" stroke="#d4efff" stroke-width="5"/>
+  <path d="m179 157 23 106m31-125 20 110m34-93 17 108m37-91 14 108m34-90 12 107m-203-72 213-8m-185 38 216-10" stroke="#8cc5e9" stroke-width="3"/>
+  <circle cx="422" cy="253" r="25" fill="#e3a271"/>
+  <path d="M394 281h58l15 69h-86z" fill="#e79742"/>
+  <path d="m401 349-14 35m53-35 15 35" stroke="#304f69" stroke-width="11" stroke-linecap="round"/>
+  <path d="M400 291 363 322m74-28 24 28" stroke="#e3a271" stroke-width="9" stroke-linecap="round"/>
+  <path d="m470 303 26-32 22 7-23 48z" fill="#fff"/>
+</svg>

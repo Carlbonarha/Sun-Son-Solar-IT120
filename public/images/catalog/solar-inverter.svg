@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 400" role="img" aria-labelledby="title desc">
+  <title id="title">Illustration of a solar inverter</title>
+  <desc id="desc">A wall-mounted inverter with a simple energy display.</desc>
+  <defs>
+    <linearGradient id="bg" x2="0" y2="1"><stop stop-color="#e7f5ff"/><stop offset="1" stop-color="#c9e1f0"/></linearGradient>
+    <linearGradient id="body" x2="1" y2="1"><stop stop-color="#fff"/><stop offset="1" stop-color="#dbe7ef"/></linearGradient>
+  </defs>
+  <rect width="640" height="400" fill="url(#bg)"/>
+  <path d="M0 331h640" stroke="#b6d0df" stroke-width="5"/>
+  <rect x="175" y="47" width="290" height="300" rx="27" fill="#163a5e" opacity=".14"/>
+  <rect x="162" y="39" width="290" height="300" rx="27" fill="url(#body)" stroke="#a6bfce" stroke-width="4"/>
+  <rect x="198" y="75" width="218" height="123" rx="13" fill="#0d355e"/>
+  <rect x="215" y="91" width="184" height="89" rx="7" fill="#c6f4dd"/>
+  <path d="M232 151c27-46 45 10 71-20s38-14 51-33 26 5 34-3" fill="none" stroke="#159b76" stroke-width="7" stroke-linecap="round"/>
+  <circle cx="232" cy="237" r="12" fill="#51bf93"/>
+  <circle cx="276" cy="237" r="12" fill="#d6e4ec"/>
+  <circle cx="320" cy="237" r="12" fill="#d6e4ec"/>
+  <path d="M229 278h156" stroke="#c2d3dd" stroke-width="8" stroke-linecap="round"/>
+  <path d="M237 324v41m142-41v41" stroke="#647f93" stroke-width="10"/>
+  <path d="M238 365h-57m198 0h58" stroke="#e8a53e" stroke-width="7" stroke-linecap="round"/>
+  <circle cx="492" cy="85" r="40" fill="#ffc84a"/>
+  <path d="m482 72 20 13-20 13" fill="none" stroke="#fff" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>
